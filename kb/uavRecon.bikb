@@ -1,0 +1,21 @@
+class Sentences
+{
+	class reconRequest
+	{
+		text = "Kilo, this is Alpha 1-1. Requesting UAV recon at the designated location. Over.";
+		speech[] = { "\kb\sound\silence_10.ogg" };
+		class Arguments {};
+		actor = "I_ifvC";
+	};
+	class reconSendOut
+	{
+		text = "Acknowledged Alpha 1-1, sending UAV. Over.";
+		speech[] = { "\kb\sound\sendingUAV.ogg" };
+		class Arguments {};
+		actor = "I_uavOperator";
+	};
+};
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };

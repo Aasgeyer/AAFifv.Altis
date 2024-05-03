@@ -1,0 +1,49 @@
+class Sentences
+{
+	class Obj_1_olymp
+	{
+		text = "Objective is under our control. Continue on mission.";
+		speech[] = { "\kb\sound\Obj_1_nf.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+	class Obj_1_at
+	{
+		text = "Be advised, Kilo has identified potential anti-tank (AT) positions along the valley. These locations have been accurately marked on your operational map.";
+		speech[] = { "\kb\sound\atPositions.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+	class Obj_2_olymp
+	{
+		text = "Objective secure. Proceed as planned.";
+		speech[] = { "\kb\sound\Obj_2_nf.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+	class Obj_3_olymp
+	{
+		text = "Objective is under our control. Solid work, Lieutenant.";
+		speech[] = { "\kb\sound\Obj_3_nf.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+	class Obj_4_olymp
+	{
+		text = "Objective secured! Area is under our control.";
+		speech[] = { "\kb\sound\Obj_4_nf.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+	class Obj_5_olymp
+	{
+		text = "All Objectives seized. Head for the LOA and await further orders.";
+		speech[] = { "\kb\sound\Obj_5_nf.ogg" };
+		class Arguments {};
+		actor = "I_hq";
+	};
+};
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };

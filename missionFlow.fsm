@@ -1,0 +1,220 @@
+/*%FSM<COMPILE "D:\Programme HDD\Steam HDD\steamapps\common\Arma 3 Tools\FSMEditor\scriptedFSM.cfg, AAF_ifv Mission Flow">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"init",0,250,-75.000000,-1830.000000,15.000000,-1785.000000,0.000000,"init"};
+item1[] = {"_",4,218,-75.000000,-1725.000000,25.000000,-1675.000000,0.000000,""};
+item2[] = {"go_to_brief",2,250,-75.000000,-1625.000000,25.000000,-1575.000000,0.000000,"go to brief"};
+item3[] = {"briefing_done",4,218,-75.000000,-1500.000000,25.000000,-1450.000000,0.000000,"briefing done"};
+item4[] = {"create_waypoints",2,250,-75.000000,-1400.000000,25.000000,-1350.000000,0.000000,"create waypoints"};
+item5[] = {"mounted",4,218,-75.000000,-1275.000000,25.000000,-1225.000000,0.000000,"mounted"};
+item6[] = {"mount",2,250,-75.000000,-1150.000000,25.000000,-1100.000000,0.000000,"mount"};
+item7[] = {"all_cleared",4,218,-75.000000,-775.000000,25.000000,-725.000000,0.000000,"all cleared"};
+item8[] = {"end",1,250,-75.000000,-650.000000,25.000000,-600.000000,0.000000,"end"};
+item9[] = {"first_cleared",4,218,-75.000000,-1050.000000,25.000000,-1000.000000,0.000000,"first cleared"};
+item10[] = {"show_at_markers",2,250,-75.000000,-925.000000,25.000000,-875.000000,0.000000,"show at markers"};
+link0[] = {0,1};
+link1[] = {1,2};
+link2[] = {2,3};
+link3[] = {3,4};
+link4[] = {4,5};
+link5[] = {5,6};
+link6[] = {6,9};
+link7[] = {7,8};
+link8[] = {9,10};
+link9[] = {10,7};
+globals[] = {0.000000,0,0,0,0,640,480,1,502,6316128,1,-663.157959,390.435455,-311.615051,-1378.478271,873,884,1};
+window[] = {2,-1,-1,-1,-1,871,-1816,-285,104,3,891};
+*//*%FSM</HEAD>*/
+class FSM
+{
+        fsmName = "AAF_ifv Mission Flow";
+        class States
+        {
+                /*%FSM<STATE "init">*/
+                class init
+                {
+                        name = "init";
+                        itemno = 0;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "_">*/
+                                class _
+                                {
+                                        itemno = 1;
+                                        priority = 0.000000;
+                                        to="go_to_brief";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "go_to_brief">*/
+                class go_to_brief
+                {
+                        name = "go_to_brief";
+                        itemno = 2;
+                        init = /*%FSM<STATEINIT""">*/"I_ifv lock 3;" \n
+                         "" \n
+                         "//create Task for briefing" \n
+                         "private _tskID = ""Task_Briefing"";" \n
+                         "private _tskDesc = ""Attend the briefing."";" \n
+                         "private _tskTitle = ""Attend Briefing"";" \n
+                         "private _tskDestination = AAS_briefingMap;" \n
+                         "private _tskassignment = 'ASSIGNED';" \n
+                         "private _tskPriority = 100;" \n
+                         "private _tskType = ""whiteboard"";" \n
+                         "[player, _tskID, [_tskDesc,_tskTitle,''], _tskDestination, _tskassignment, _tskPriority, false, _tskType] call BIS_fnc_taskCreate;" \n
+                         "" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "briefing_done">*/
+                                class briefing_done
+                                {
+                                        itemno = 3;
+                                        priority = 0.000000;
+                                        to="create_waypoints";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"missionNamespace getVariable [""AAS_animatedBriefingDone"", false]"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "create_waypoints">*/
+                class create_waypoints
+                {
+                        name = "create_waypoints";
+                        itemno = 4;
+                        init = /*%FSM<STATEINIT""">*/"I_ifv lock 0;" \n
+                         "" \n
+                         "I_grp_2 addWaypoint [markerpos ""marker_alpha_2"", 15];" \n
+                         "I_grp_3 addWaypoint [markerpos ""marker_alpha_3"", 15];" \n
+                         "for ""_m"" from 1 to 4 do {" \n
+                         "	private _wp2 = I_grp_2 addWaypoint [markerpos format [""marker_move%1_2"",_m], 15];" \n
+                         "	private _wp3 = I_grp_3 addWaypoint [markerpos format [""marker_move%1_3"",_m], 15];" \n
+                         "	switch (_m) do {" \n
+                         "		case (1): {" \n
+                         "			private _trg = missionNamespace getVariable [""AAS_LDtrigger"", objNull];" \n
+                         "			_trg synchronizeWaypoint [_wp2,_wp3];" \n
+                         "		};" \n
+                         "		case (2): {" \n
+                         "			private _trg = missionNamespace getVariable [format [""AAS_ObjTrigger_%1"", _m-1], objNull];" \n
+                         "			_trg synchronizeWaypoint [_wp2,_wp3];" \n
+                         "		};" \n
+                         "		case (3): {" \n
+                         "			private _trg = missionNamespace getVariable [format [""AAS_ObjTrigger_%1"", _m-1], objNull];" \n
+                         "			_trg synchronizeWaypoint [_wp2];" \n
+                         "		};" \n
+                         "	};" \n
+                         "};" \n
+                         "" \n
+                         "(units I_grp_2 + units I_grp_3) apply {" \n
+                         "	_x setUnitPos ""UP"";" \n
+                         "	_x setUnitPos ""AUTO"";" \n
+                         "	_x doFollow leader group _x;" \n
+                         "};" \n
+                         "" \n
+                         "[""Task_Briefing"", 'SUCCEEDED'] call BIS_fnc_taskSetState;" \n
+                         "" \n
+                         "//create Task for mounting" \n
+                         "private _tskID = ""Task_mount"";" \n
+                         "private _tskDesc = ""Mount the IFV."";" \n
+                         "private _tskTitle = ""Mount IFV"";" \n
+                         "private _tskDestination = I_ifv;" \n
+                         "private _tskassignment = 'ASSIGNED';" \n
+                         "private _tskPriority = 100;" \n
+                         "private _tskType = ""getin"";" \n
+                         "[player, _tskID, [_tskDesc,_tskTitle,''], _tskDestination, _tskassignment, _tskPriority, false, _tskType] call BIS_fnc_taskCreate;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "mounted">*/
+                                class mounted
+                                {
+                                        itemno = 5;
+                                        priority = 0.000000;
+                                        to="mount";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"objectParent player isEqualTo I_ifv"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "mount">*/
+                class mount
+                {
+                        name = "mount";
+                        itemno = 6;
+                        init = /*%FSM<STATEINIT""">*/"[""Task_mount"", 'SUCCEEDED'] call BIS_fnc_taskSetState;" \n
+                         "" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "first_cleared">*/
+                                class first_cleared
+                                {
+                                        itemno = 9;
+                                        priority = 0.000000;
+                                        to="show_at_markers";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(missionNamespace getVariable ['AAS_objCleared',0]) > 0"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "end">*/
+                class end
+                {
+                        name = "end";
+                        itemno = 8;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "show_at_markers">*/
+                class show_at_markers
+                {
+                        name = "show_at_markers";
+                        itemno = 10;
+                        init = /*%FSM<STATEINIT""">*/"[AAS_atPositionMarkers, 1] spawn BIS_fnc_showMarkerArray;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "all_cleared">*/
+                                class all_cleared
+                                {
+                                        itemno = 7;
+                                        priority = 0.000000;
+                                        to="end";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(missionNamespace getVariable ['AAS_objCleared',0]) >= 5"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+        };
+        initState="init";
+        finalStates[] =
+        {
+                "end",
+        };
+};
+/*%FSM</COMPILE>*/

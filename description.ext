@@ -1,0 +1,20 @@
+#include "cfg\cfgSounds.hpp"
+
+class CfgSentences
+{
+	class AAF_ifv
+	{
+		class objectives
+		{
+			file = "kb\objectives.bikb";
+			#include "kb\objectives.bikb" // avoids a double declaration
+		};
+		class uavRecon
+		{
+			file = "kb\uavRecon.bikb";
+			#include "kb\uavRecon.bikb" // avoids a double declaration
+		};
+	};
+};
+
+#include "cfg\cfgCommunicationMenu.hpp"
